@@ -9,7 +9,8 @@ const _hasLoggedIn = (req, res, next) => {
     } else {
         res.redirect('/login');
     }
-}
+};
+
 routes.post("/",
   _hasLoggedIn,
   (req, res) => {
@@ -53,9 +54,12 @@ routes.get("/:commentId",
 routes.delete("/:comment_id",
   _hasLoggedIn,
   (req, res) => {
-    Comment.deleteOne({ _id: req.params.comment_id }, (err, oDelRes) => {
-      if (err) res.send(err);
-      res.sendStatus(204);
+    Comment.findById(req.params.comment_id, (err, comment) => {
+      if (!comment.author.equals(req.user._id)) res.sendStatus(401);
+      if (err) res.status(500).send(err);
+      comment.remove()
+        .then(res => res.sendStatus(204))
+        .catch(err => res.status(500).send(err));
     });
 });
 
