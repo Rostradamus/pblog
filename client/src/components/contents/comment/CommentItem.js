@@ -22,7 +22,7 @@ class CommentItem extends Component {
   }
 
 	render() {
-		const { author, content, created_at } = this.props.comment;
+		const { author, content, created_at, bIsAuthor } = this.props.comment;
 		// <Comment.Avatar src= { tempSrc } />
 		return (
 			<Comment className="post-content-comment-item">
@@ -34,6 +34,7 @@ class CommentItem extends Component {
             icon="delete"
             size="mini"
             onClick={ this._handleDeleteComment.bind(this) }
+            disabled={ !bIsAuthor }
             inverted />
 					<Comment.Text content={ content } />
 					<Comment.Actions>

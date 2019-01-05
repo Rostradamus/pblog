@@ -29,12 +29,19 @@ routes.get("/",
     const order = { created_at: -1 };
     const post = req.params.post_id;
     Comment.find({ post })
-      .populate({ path: "author", select: "userName-_id" })
+      .populate({ path: "author", select: "userName _id" })
       .sort(order)
+      .lean()
       .exec((err, comments) => {
         if (err) res.send(err);
+        const processedComments = comments.map(comment => {
+          const bIsAuthor = req.user && req.user._id && comment.author._id.equals(req.user._id);
+          const result = Object.assign({...comment}, { bIsAuthor });
+          delete result.author._id;
+          return result;
+        });
         res.status(200);
-        res.send(comments);
+        res.send(processedComments);
       });
 });
 
