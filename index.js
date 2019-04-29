@@ -52,7 +52,7 @@ app.get("/*", (req, res) => {
   })
 });
 
-const serverPort = process.env.SERVER_PORT || 5000;
+const serverPort = process.env.PBLOG_SERVER_PORT || 5000;
 const server = app.listen(serverPort,
   () => console.log(`Running server at ${serverPort}`));
 const dbConnector = require("@configs/dbConnector");
