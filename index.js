@@ -8,18 +8,19 @@ const morgan = require("morgan");
 const path = require("path");
 
 const app = express();
-app.disable("etag");
 app.use(morgan("dev"));
 app.use(
   cookieSession({
     maxAge: 1 * 1 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_SECRET_KEY]
+    keys: [process.env.COOKIE_SESSION_KEY]
   })
 );
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(express.static(`${__dirname}/client/build`));
+app.disable("etag");
 
 // Use Session check middleware for authentication
 const sessionPath = /\/api\/user\/session((\/)?(.*))/;
@@ -43,7 +44,6 @@ const routes = require("@routes");
 app.use("/api", routes);
 
 // Serve static routes
-app.use(express.static(`${__dirname}/client/build`));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "client/build/index.html"), err => {
     if (err) {
