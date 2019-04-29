@@ -1,31 +1,19 @@
-const CONFIG = require('./config');
-const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const cookieSession = require('cookie-session');
-const passport = require('passport');
-const morgan = require('morgan');
-const path = require('path');
-
-// DATABASE PROXY to check go on mlab.com
-const db = {
-  user: process.env.PBLOG_DB_USERNAME,
-  pass: process.env.PBLOG_DB_PASSWORD,
-  uri: process.env.PBLOG_DB_URI
-};
-mongoose.set('useFindAndModify', false);
-mongoose.Promise = global.Promise;
-mongoose.connect(`mongodb://${db.user}:${db.pass}@${db.uri}`, {
-  useCreateIndex: true,
-  useNewUrlParser: true
-});
+require("module-alias/register");
+require("dotenv").config();
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieSession = require("cookie-session");
+const passport = require("passport");
+const morgan = require("morgan");
+const path = require("path");
 
 const app = express();
-app.use(morgan('dev'));
+app.disable("etag");
+app.use(morgan("dev"));
 app.use(
   cookieSession({
     maxAge: 1 * 1 * 60 * 60 * 1000,
-    keys: [CONFIG.cookieKey]
+    keys: [process.env.COOKIE_SECRET_KEY]
   })
 );
 app.use(bodyParser.json());
@@ -33,35 +21,41 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(`${__dirname}/client/build`));
-app.disable('etag');
+// Use Session check middleware for authentication
+const sessionPath = /\/api\/user\/session((\/)?(.*))/;
+const postGETRequest = {
+  method: "GET",
+  path: /\api\/posts((\/)?(.*))/
+};
+const userRegisterPath = {
+  method: "POST",
+  path: /\/api\/users/
+};
+const whiteList = [sessionPath, userRegisterPath, postGETRequest];
+const sessionChecker = require("@app/middlewares/sessionChecker");
+app.use(sessionChecker(whiteList));
 
-// Import Models
-require('./models/User');
-require('./models/Comment');
-require('./models/Post');
+// Import models
+const models = require("@models");
 
-// Import Rest Controllers
-// require('./routes/authController')(app);
-// require('./routes/commentController')(app);
-// require('./routes/postController')(app);
-// const authController= require('./routes/authController');
-// app.use("/api/user", authController);
-// const postController = require('./routes/postController');
-// app.use("/api/posts/", postController);
-// const commentController = require('./routes/commentController');
-// app.use("/api/comments", commentController);
-
-const routes = require('./routes');
+// Serve API routes
+const routes = require("@routes");
 app.use("/api", routes);
 
-// Serve application level controller
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'), err => {
+// Serve static routes
+app.use(express.static(`${__dirname}/client/build`));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build/index.html"), err => {
     if (err) {
       res.status(500).send(err);
     }
   })
 });
 
-app.listen(5000);
+const serverPort = process.env.SERVER_PORT || 5000;
+const server = app.listen(serverPort,
+  () => console.log(`Running server at ${serverPort}`));
+const dbConnector = require("@configs/dbConnector");
+dbConnector(server);
+
+module.exports = server;

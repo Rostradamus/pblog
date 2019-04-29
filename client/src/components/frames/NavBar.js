@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { Menu, Segment, Dropdown, Icon } from "semantic-ui-react";
+import { AuthActions } from "Actions";
 import "./NavBar.less";
 
 class NavBar extends Component {
@@ -18,6 +19,10 @@ class NavBar extends Component {
 
   _handleItemClick(e, { name }) {
     this.setState({ activeItem: name });
+  }
+
+  _handleLogout() {
+    this.props.dispatch(AuthActions.logout());
   }
 
   _getAuthStatus() {
@@ -44,11 +49,11 @@ class NavBar extends Component {
     return this._getAuthStatus() ?
       (
         <Menu.Item
-        className="navbar-right-item"
-        position="right"
-        key="logout"
-        name="logout"
-        href="/api/user/logout" />
+          className="navbar-right-item"
+          position="right"
+          key="logout"
+          name="logout"
+          onClick={ this._handleLogout.bind(this) } />
       ) : (
         <Menu.Item
           className="navbar-right-item"
@@ -149,7 +154,7 @@ class NavBar extends Component {
           </Menu.Menu>
         </Menu>
       </Segment>
-      );
+    );
   }
 }
 

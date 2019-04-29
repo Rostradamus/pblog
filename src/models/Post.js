@@ -19,4 +19,4 @@ PostSchema.pre("remove", function(next, a,b) {
   // next();
 });
 
-mongoose.model('Post', PostSchema);
+module.exports = mongoose.model('Post', PostSchema);

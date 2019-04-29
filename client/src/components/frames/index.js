@@ -1,6 +1,6 @@
-import NavBar from './NavBar';
-import SlideBar from './SlideBar';
-import Landing from './Landing';
+import NavBar from "./NavBar";
+import SlideBar from "./SlideBar";
+import Landing from "./Landing";
 
 export {
   NavBar,

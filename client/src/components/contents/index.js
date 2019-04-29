@@ -1,4 +1,4 @@
-import PageNotFound from './PageNotFound';
+import PageNotFound from "./PageNotFound";
 import { Auth, AuthModal, Register} from "./auth";
 import { PostCard, PostContent, PostCardList, PostForm, PostContainer } from "./post";
 import { CommentItem, CommentForm } from "./comment";

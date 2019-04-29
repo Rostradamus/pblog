@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { PostActions, CommentActions } from "Actions";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { Container, Divider, List } from "semantic-ui-react";
 import TimeUtils from "Utils/TimeUtils";
 
@@ -32,22 +32,20 @@ class PostList extends Component {
               onClick = { this._handleTitleClick.bind(this, post._id)}
               content={ post.title } />
             <List.Description
-             content={ `Updated at ${TimeUtils.makeTimeToLocalString(post.time)} by ${post.author}`} />
+              content={ `Updated at ${TimeUtils.makeTimeToLocalString(post.time)} by ${post.author}`} />
           </List.Content>
         </List.Item>)
-      );
+    );
   }
 
   render() {
     return (
-
       <Container>
         <Divider />
         <List divided relaxed inverted>
           { this.getListItem() }
         </List>
       </Container>
-
     );
   }
 }

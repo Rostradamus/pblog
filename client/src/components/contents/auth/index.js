@@ -1,6 +1,6 @@
-import Auth from './Auth';
-import AuthModal from './AuthModal';
-import Register from './Register';
+import Auth from "./Auth";
+import AuthModal from "./AuthModal";
+import Register from "./Register";
 
 export {
   Auth,

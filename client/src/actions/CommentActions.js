@@ -1,5 +1,5 @@
 import { COMMENT_ACTION_TYPES } from "./actionTypes";
-import axios from 'axios';
+import axios from "axios";
 
 export default class CommentActions {
   static addComment(postId, data) {

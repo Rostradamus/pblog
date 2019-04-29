@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { PostActions } from 'Actions';
-import PostCard from './PostCard';
-import { Button, Divider, Card, Menu, Input, Icon } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { PostActions } from "Actions";
+import PostCard from "./PostCard";
+import { Button, Divider, Card, Menu, Input, Icon } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 
 class PostCardList extends Component {
 
@@ -30,27 +30,27 @@ class PostCardList extends Component {
         <Menu secondary>
           <Menu.Item>
             <Button
-              size='tiny'
+              size="tiny"
               inverted
               as={ Link }
-              to='/post/new'
+              to="/post/new"
               disabled={ !this._hasLoggedIn() }
-              animated='vertical'>
+              animated="vertical">
               <Button.Content hidden>Create</Button.Content>
               <Button.Content visible>
-                <Icon name='add' />
+                <Icon name="add" />
               </Button.Content>
-          </Button>
+            </Button>
           </Menu.Item>
-          <Menu.Menu position='right'>
+          <Menu.Menu position="right">
             <Menu.Item>
-              <Input icon='search' placeholder='Search...' />
+              <Input icon="search" placeholder="Search..." />
             </Menu.Item>
           </Menu.Menu>
         </Menu>
 
         <Divider />
-        <Card.Group itemsPerRow='5' >
+        <Card.Group itemsPerRow="5" >
           { this.getPostCards() }
         </Card.Group>
       </div>

@@ -1,11 +1,13 @@
-import AuthActions from './authActions';
-import PostActions from './postActions';
-import ModalActions from './modalActions';
-import CommentActions from './CommentActions';
+import AuthActions from "./AuthActions";
+import PostActions from "./PostActions";
+import ModalActions from "./ModalActions";
+import CommentActions from "./CommentActions";
+import UserActions from "./UserActions";
 
 export {
   AuthActions,
   PostActions,
   ModalActions,
-  CommentActions
+  CommentActions,
+  UserActions
 };

@@ -1,26 +1,16 @@
-import { userConstants } from '../actions/actionTypes';
+import { AUTH_ACTION_TYPES, USER_ACTION_TYPES } from "Actions/actionTypes";
 
 export default (state = null, action) => {
-    switch (action.type) {
-    case userConstants.LOGIN_REQUEST: {
-        return action.payload || null;
-    }
-    case userConstants.LOGIN_SUCCESS: {
-        return action.payload || null;
-    }
-    case userConstants.LOGIN_FAILURE: {
-        return action.payload || null;
-    }
-    case userConstants.REGISTER_REQUEST: {
-        return action.payload || null;
-    }
-    case userConstants.REGISTER_SUCCESS: {
-        return action.payload || null;
-    }
-    case userConstants.REGISTER_FAILURE: {
-        return action.payload || null;
-    }
-    default:
-        return state;
-    }
+  switch (action.type) {
+  case AUTH_ACTION_TYPES.LOGIN_REQUEST:
+  case AUTH_ACTION_TYPES.LOGIN_SUCCESS:
+  case AUTH_ACTION_TYPES.LOGIN_FAILURE:
+  case USER_ACTION_TYPES.REGISTER_REQUEST:
+  case USER_ACTION_TYPES.REGISTER_SUCCESS:
+  case USER_ACTION_TYPES.REGISTER_FAILURE: {
+    return action.payload || null;
+  }
+  default:
+    return state;
+  }
 };

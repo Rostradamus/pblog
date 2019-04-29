@@ -15,4 +15,4 @@ const CommentSchema = new Schema({
   isHidden: {type: Boolean, default: false}
 }, { collection: 'Comment' });
 
-mongoose.model('Comment', CommentSchema);
+module.exports = mongoose.model('Comment', CommentSchema);

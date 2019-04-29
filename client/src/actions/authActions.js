@@ -1,16 +1,16 @@
-import { userConstants } from "./actionTypes";
+import { AUTH_ACTION_TYPES } from "./actionTypes";
 import axios from "axios";
 
 export default class AuthActions {
   static fetchUserSession() {
     return async dispatch => {
       let res;
-      dispatch(this._requestLogin(res));
+      dispatch(_requestLogin(res));
       try {
-        res = await axios.get("/api/user/current_user");
-        dispatch(this._resolveLogin(res.data));
+        res = await axios.get("/api/user/session");
+        dispatch(_resolveLogin(res.data));
       } catch (err) {
-        dispatch(this._failLogin(err));
+        dispatch(_failLogin(err));
       }
     };
   }
@@ -18,54 +18,52 @@ export default class AuthActions {
   static login(data) {
     return async dispatch => {
       let res;
-      dispatch(this._requestLogin({ email: data.email }));
+      dispatch(_requestLogin({ email: data.email }));
       try {
-        res = await axios.post("/api/user", data);
-        dispatch(this._resolveLogin(res.data));
+        res = await axios.post("/api/user/session", data);
+        dispatch(_resolveLogin(res.data));
       } catch (err) {
-        dispatch(this._failLogin(err));
+        dispatch(_failLogin(err));
         // TODO: shouldn't be hardcoded here in the front-end
         throw new Error("Please check your email address or password");
       }
     };
   }
 
-  static register(oBody) {
+  static logout() {
     return async dispatch => {
-      let res;
-      dispatch(this._requestRegister(oBody));
+      dispatch(_requestLogout());
       try {
-        res = await axios.post("/api/user/register", oBody);
-        dispatch(this._resolveRegister(res.data));
+        await axios.delete("/api/user/session");
+        dispatch(_resolveLogout());
       } catch (err) {
-        dispatch(this._failRegister(err));
-        // TODO: shouldn't use err.response.data, instead should use e.message
-        throw new Error(err.response.data.errmsg);
+        dispatch(_failLogout());
+        // TODO: shouldn't be hardcoded here in the front-end
+        throw new Error("Please check your email address or password");
       }
     };
   }
+}
+function _requestLogin(data) {
+  return { type: AUTH_ACTION_TYPES.LOGIN_REQUEST, payload: data };
+}
 
-  static _requestLogin(data) {
-    return { type: userConstants.LOGIN_REQUEST, payload: data };
-  }
+function _resolveLogin(user) {
+  return { type: AUTH_ACTION_TYPES.LOGIN_SUCCESS, payload: user };
+}
 
-  static _resolveLogin(user) {
-    return { type: userConstants.LOGIN_SUCCESS, payload: user };
-  }
+function _failLogin() {
+  return { type: AUTH_ACTION_TYPES.LOGIN_FAILURE, payload: {} };
+}
 
-  static _failLogin() {
-    return { type: userConstants.LOGIN_FAILURE, payload: {} };
-  }
+function _requestLogout() {
+  return { type: AUTH_ACTION_TYPES.LOGOUT_REQUEST, payload: {}};
+}
 
-  static _requestRegister(data) {
-    return { type: userConstants.REGISTER_REQUEST, payload: data };
-  }
+function _resolveLogout() {
+  return { type: AUTH_ACTION_TYPES.LOGOUT_SUCCESS, payload: {}};
+}
 
-  static _resolveRegister(user) {
-    return { type: userConstants.REGISTER_SUCCESS, payload: user };
-  }
-
-  static _failRegister(error) {
-    return { type: userConstants.REGISTER_FAILURE, payload: error };
-  }
+function _failLogout() {
+  return { type: AUTH_ACTION_TYPES.LOGOUT_FAILURE, payload: {}};
 }

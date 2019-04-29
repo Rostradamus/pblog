@@ -1,5 +1,5 @@
-import { POST_ACTION_TYPES } from './actionTypes';
-import axios from 'axios';
+import { POST_ACTION_TYPES } from "./actionTypes";
+import axios from "axios";
 
 export default class PostActions {
   static fetchPosts() {
@@ -12,7 +12,7 @@ export default class PostActions {
         }
       });
       try {
-        res = await axios.get('/api/posts');
+        res = await axios.get("/api/posts");
         dispatch({
           type: POST_ACTION_TYPES.FETCH_SUCCESS,
           payload: {
@@ -75,14 +75,14 @@ export default class PostActions {
         }
       });
       try {
-        res = await axios.post('/api/posts', data);
+        res = await axios.post("/api/posts", data);
         dispatch({
           type: POST_ACTION_TYPES.ADD_SUCCESS,
           payload: {
             selected: res.data
           }
         });
-        // window.location = '/post/detail/' + res.data._id;
+        // window.location = "/post/detail/" + res.data._id;
         history.push(`/post/detail/${res.data._id}`);
       } catch (err) {
         dispatch({
@@ -106,7 +106,7 @@ export default class PostActions {
         }
       });
       try {
-        res = await axios.put('/api/posts', data);
+        res = await axios.put("/api/posts", data);
         dispatch({
           type: POST_ACTION_TYPES.EDIT_SUCCESS,
           payload: {

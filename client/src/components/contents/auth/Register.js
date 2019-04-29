@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
-import { AuthActions, ModalActions } from "Actions";
+import { UserActions, ModalActions } from "Actions";
 import { connect } from "react-redux";
 
 class Register extends Component {
@@ -32,7 +32,7 @@ class Register extends Component {
     if (firstName.trim() === "") throw new Error("Please enter first name");
     if (lastName.trim() === "") throw new Error("Please enter last name");
     if (!this._validateEmail(email)) throw new Error("Please enter valid email address");
-    if (!this._validatePassword(password)) 
+    if (!this._validatePassword(password))
       throw new Error("Please enter valid password \n"
         + "Passwords must be: \n"
         + "* - At least 8 characters long, max length anything \n"
@@ -129,7 +129,7 @@ const mapStateToProps = state => ({
 });
 const mapDispatchToProps = dispatch => ({
   register: async oBody => {
-    await dispatch(AuthActions.register(oBody));
+    await dispatch(UserActions.register(oBody));
   },
   openModal: content => {
     dispatch(ModalActions.openModal(content));

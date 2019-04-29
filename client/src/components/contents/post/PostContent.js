@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Header, Container, Divider, Button, Icon, Comment, Item } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
-import './PostContent.less';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Header, Container, Divider, Button, Icon, Comment, Item } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import "./PostContent.less";
 import { CommentForm, CommentItem } from "../comment";
-import { PostActions, CommentActions } from 'Actions';
+import { PostActions, CommentActions } from "Actions";
 import TimeUtils from "Utils/TimeUtils";
 
 class PostContent extends Component {
@@ -18,8 +18,8 @@ class PostContent extends Component {
 
   componentDidMount() {
     const postId = this.props.match.params.postId;
-      // isSelectedSamePostId = this.props.posts.selected._id
-      //   && this.props.posts.selected._id === postId;
+    // isSelectedSamePostId = this.props.posts.selected._id
+    //   && this.props.posts.selected._id === postId;
     Promise.all([this.props.selectPost(postId), this.props.getComments(postId)]);
     // if (isSelectedSamePostId || this.props.posts.isFetching)
     //   return;
@@ -44,19 +44,19 @@ class PostContent extends Component {
             as={ Link }
             to={ `/post/edit/${post._id}` }
             disabled={ !post.bIsAuthor }
-            animated='vertical'>
+            animated="vertical">
             <Button.Content hidden>Edit</Button.Content>
             <Button.Content visible>
-              <Icon name='edit' />
+              <Icon name="edit" />
             </Button.Content>
           </Button>
           <Button
             disabled={ !post.bIsAuthor }
             onClick = { this._deletePost.bind(this, post._id) }
-            animated='vertical'>
+            animated="vertical">
             <Button.Content hidden>Delete</Button.Content>
             <Button.Content visible>
-              <Icon name='trash' />
+              <Icon name="trash" />
             </Button.Content>
           </Button>
         </Button.Group>

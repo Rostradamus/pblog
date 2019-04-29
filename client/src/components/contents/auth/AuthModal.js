@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Button, Modal, Icon } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { ModalActions } from "Actions";
@@ -20,8 +20,8 @@ class AuthModal extends Component {
           as="p"
           content={ modalState.content }/>
         <Modal.Actions>
-          <Button color='green' onClick={ closeModal } inverted>
-            <Icon name='checkmark' /> Got it
+          <Button color="green" onClick={ closeModal } inverted>
+            <Icon name="checkmark" /> Got it
           </Button>
         </Modal.Actions>
       </Modal>

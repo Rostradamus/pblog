@@ -1,24 +1,16 @@
-const routes = require('express').Router({mergeParams: true});
-const mongoose = require('mongoose');
-const Post = mongoose.model('Post');
-const Comment = mongoose.model('Comment');
+const routes = require("express").Router({mergeParams: true});
+const mongoose = require("mongoose");
+const Post = mongoose.model("Post");
+const Comment = mongoose.model("Comment");
 
-const _hasLoggedIn = (req, res, next) => {
-    if (req.user) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-}
 routes.post("/",
-  _hasLoggedIn,
   (req, res) => {
     const { author, content } = req.body,
       post = req.params.post_id;
     const comment = new Comment({ post, author, content });
     // const comment = new Comment(Object.assign, req.body, { authorId: req.user._id });
     comment.save((err, target) => {
-      if (err) res.send(err);
+      if (err) return res.status(500).json(err);
       res.status(200);
       res.send(target);
     });
@@ -32,7 +24,7 @@ routes.get("/",
       .populate({ path: "author", select: "userName-_id" })
       .sort(order)
       .exec((err, comments) => {
-        if (err) res.send(err);
+        if (err) return res.status(500).json(err);
         res.status(200);
         res.send(comments);
       });
@@ -44,10 +36,9 @@ routes.get("/:commentId",
 });
 
 routes.delete("/:comment_id",
-  _hasLoggedIn,
   (req, res) => {
     Comment.deleteOne({ _id: req.params.comment_id }, (err, oDelRes) => {
-      if (err) res.send(err);
+      if (err) return res.status(500).json(err);
       res.sendStatus(204);
     });
 });

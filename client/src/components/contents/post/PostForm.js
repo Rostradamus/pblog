@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Button, Form, TextArea } from 'semantic-ui-react';
-import { PostActions } from 'Actions';
-import './PostForm.less';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Button, Form, TextArea } from "semantic-ui-react";
+import { PostActions } from "Actions";
+import "./PostForm.less";
 
 class PostForm extends Component {
 
@@ -44,33 +44,32 @@ class PostForm extends Component {
   }
 
   render() {
-
     return (
       <Form
         inverted
         className="post-form"
         onSubmit={ this._submitHandler.bind(this) }
         loading= { this.props.posts.isFetching }>
-      <Form.Field className="post-form-field-title">
-        <label className="field-label">Title</label>
-        <input
-          name='title'
-          placeholder='Title'
-          value={ this.state.title }
-          onChange = { this._onChangeInputHandler.bind(this) } />
-      </Form.Field>
-      <Form.Field className="post-form-field-content">
-        <label className="field-label">Contents</label>
-        <TextArea
-          className='content-text-area'
-          name='content'
-          placeholder='Please enter your input'
-          value={ this.state.content }
-          onChange = { this._onChangeInputHandler.bind(this) } />
-      </Form.Field>
-      <Button type='submit'>Submit</Button>
+        <Form.Field className="post-form-field-title">
+          <label className="field-label">Title</label>
+          <input
+            name="title"
+            placeholder="Title"
+            value={ this.state.title }
+            onChange = { this._onChangeInputHandler.bind(this) } />
+        </Form.Field>
+        <Form.Field className="post-form-field-content">
+          <label className="field-label">Contents</label>
+          <TextArea
+            className="content-text-area"
+            name="content"
+            placeholder="Please enter your input"
+            value={ this.state.content }
+            onChange = { this._onChangeInputHandler.bind(this) } />
+        </Form.Field>
+        <Button type="submit">Submit</Button>
       </Form>
-      );
+    );
   }
 }
 

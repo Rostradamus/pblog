@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Grid } from 'semantic-ui-react';
-import { Route } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Grid } from "semantic-ui-react";
+import { Route } from "react-router-dom";
 import { PostContent, PostList, PostForm } from "./";
-import { PostActions, CommentActions } from 'Actions';
+import { PostActions, CommentActions } from "Actions";
 import "./PostContainer.less";
 
 class PostContainer extends Component {
@@ -16,9 +16,9 @@ class PostContainer extends Component {
 
       <Grid className="post-detail-container" columns={2} divided>
         <Grid.Column className="post-detail-content-section" width={10}>
-          <Route key='post_form' exact path="/post/new/" component={PostForm} />
-          <Route key='post_edit' path="/post/edit/:postId" component={PostForm} />
-          <Route key='post_detail' path="/post/detail/:postId" component={PostContent} />
+          <Route key="post_form" exact path="/post/new/" component={PostForm} />
+          <Route key="post_edit" path="/post/edit/:postId" component={PostForm} />
+          <Route key="post_detail" path="/post/detail/:postId" component={PostContent} />
         </Grid.Column>
 
         <Grid.Column className="post-detail-list-section" width={5}>
