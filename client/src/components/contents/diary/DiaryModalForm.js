@@ -96,7 +96,7 @@ class DiaryModalForm extends Component {
     const { selectedCalendarData } = this.props;
     const isOpen = selectedCalendarData !== null;
     return (
-      <Modal className="diary-modal-form"
+      <Modal className="diary-modal-form" closeOnDimmerClick={ false }
         onClose={ this.onClose } open={ isOpen }>
         <Modal.Header>
           New Diary
